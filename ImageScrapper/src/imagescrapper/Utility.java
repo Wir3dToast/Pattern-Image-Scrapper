@@ -16,16 +16,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.lang.Thread; 
+import javax.swing.JTextField;
+import java.io.IOException; 
 
 public class Utility {
     
    //Utility class: contains methods needed universally in the program
-    public static javax.swing.JTextArea TextArea;
     public static String url;
-    public static javax.swing.JTextField imgexp;
-    public static javax.swing.JTextField linkexp;
+    public static JTextField imgexp;
+    public static JTextField linkexp;
     public static String directory;
     
     //needed for linux and windows file system differentiation.
@@ -41,28 +40,10 @@ public class Utility {
      public static boolean CheckifDirExists(String path) {
         return (new File(path)).exists();
      }
-     
-     public static void print(String print) {
-         new Thread(new PrintThread(print)).start();
-     }
-     
+         
      public static String escapeBackSlash(String path) {
          //escapes backslashes in directory pathnames 
          return path.replaceFirst("\\\\","\\\\\\\\");
-     }
-     
-     static class PrintThread extends Thread {
-  
-        String line;
-        
-        public PrintThread(String line) {
-            this.line = line;
-        }
-        
-        public void run() {
-            TextArea.append(line + '\n');
-        }
-     
      }
 
 }

@@ -20,7 +20,7 @@ public class UrlParser {
     //Note to self: need to make ImageParser and UrlParser more consist in terms of constructors!!!
     
     public UrlParser() throws IOException {
-        Utility.print("Getting links from " + Utility.url);
+        System.out.println("Getting links from " + Utility.url);
     }
     
     public void RegexDecider(String regex, String url) throws IOException { 
@@ -38,22 +38,25 @@ public class UrlParser {
         int counter = 0;
         
         for(Element i : links) {
+            
             if(i.attr("abs:href").equals("")) {
-                Utility.print("Link is Different Type: " + i.outerHtml());
+                System.out.println("Link is Different Type: " + i.outerHtml());
             } else {
-               Utility.print("Link at " + i.attr("abs:href"));
+               System.out.println("Link at " + i.attr("abs:href"));
             }
             
             counter++;
       }
-      Utility.print("=================");
-      Utility.print(counter + " Links were Dectected on this Web Page");
+        
+      System.out.println("=================");
+      System.out.println(counter + " Links were Dectected on this Web Page");
     }   
+    
     private void printWantedLinks(String regex, String url) throws IOException {
         Elements links = Utility.getElements("a[href]", url);
         for(Element i: links){
             if(i.attr("abs:href").contains(regex))
-               Utility.print(i.attr("abs:href"));
+               System.out.println(i.attr("abs:href"));
         }
     }   
     

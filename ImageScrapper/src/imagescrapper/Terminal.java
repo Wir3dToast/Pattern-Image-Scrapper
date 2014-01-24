@@ -17,14 +17,14 @@ public class Terminal {
      //Initializes global url and directory. 
      public Terminal() throws IOException {
       if(Utility.CheckifDirExists(Utility.directory)) {
-          Utility.print("Warning: directory does not exist");
+          System.out.println("Warning: directory does not exist");
       }
         com = new CommandExecuter();
-        Utility.print("> ");
+        System.out.println("> ");
      }
      
      public void ExecuteCommand(String command) throws IOException {
-        Utility.print(command);
+        System.out.println(command);
         switch(command) {
             
             case "printlinks":com.printLinks();
@@ -43,9 +43,9 @@ public class Terminal {
                                  break;
             case "scrapimg": com.ScrapRegexImages();
                              break;                     
-            default: Utility.print("Not a valid command");    
+            default: System.out.println("Not a valid command");    
         }
         
-        Utility.print("> ");
+        System.out.println("> ");
     }   
 }

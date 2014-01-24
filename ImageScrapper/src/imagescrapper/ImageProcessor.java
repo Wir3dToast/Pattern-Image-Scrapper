@@ -27,12 +27,12 @@ public class ImageProcessor {
     public ImageProcessor() throws IOException {
         //Destination address
         //Connects and gets HTML file
-         Utility.print("Downloading to " + Utility.directory);
+         System.out.println("Downloading to " + Utility.directory);
     }
     
     //Get ALL images on a webpage. 
     public void ProcessImage(String url) throws IOException {
-       Utility.print("Connected to " + url);
+        System.out.println("Connected to " + url);
         Elements images = Utility.getElements("[src]",url);
         
         for (Element i : images) {
@@ -46,7 +46,8 @@ public class ImageProcessor {
     private void DownloadFile(String urlpath) {
         //Creates URL
         try {
-            Utility.print("Saving Image From " + urlpath);
+            System.out.println("Saving Image From " + urlpath);
+            
             URLConnection conn = (new URL(urlpath)).openConnection();
             conn.setRequestProperty("User-Agent", "Mozilla");
             BufferedImage image = ImageIO.read(conn.getInputStream());
@@ -54,7 +55,7 @@ public class ImageProcessor {
         }
         
         catch(CMMException | IOException a) {
-            Utility.print("Invalid Image format. WIP");
+            System.out.println("Invalid Image format. WIP");
         }
           
     }
@@ -71,7 +72,7 @@ public class ImageProcessor {
     private void RegexLinkDownloadTraversal(ArrayList<String> list) throws IOException {
         //Note to self: think of better wway to create URL parse. 
         for(String a : list ) {
-          Utility.print("Downloading from " + a);
+          System.out.println("Downloading from " + a);
            ProcessImage(a);
         }       
     }
@@ -80,7 +81,7 @@ public class ImageProcessor {
     //Uses URL received and DIRECTLY downloads it. 
     private void DirectDownloadFromLink(ArrayList<String> list) throws IOException {
         for(String a : list ) {
-           Utility.print("Downloading Directly from " + a);
+           System.out.println("Downloading Directly from " + a);
            DownloadFile(a);
         }       
     }
@@ -97,6 +98,9 @@ public class ImageProcessor {
         for(String a : list) { DownloadFile(a); }
     }
     
+    /*
+    All methods used to save images to the disk 
+    */
     private String getName(String url) {
         return url.substring(url.lastIndexOf("/") + 1);
     }

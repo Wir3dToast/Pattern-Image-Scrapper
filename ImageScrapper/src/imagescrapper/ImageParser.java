@@ -20,11 +20,11 @@ public class ImageParser {
      int counter = 0;
      for(Element i : images) {
          counter++;
-        Utility.print(" Image at " + i.attr("abs:src"));
+        System.out.println(" Image at " + i.attr("abs:src"));
      }
      
-    Utility.print("=================");
-    Utility.print(counter + " Images were Dectected on this Web Page"); 
+    System.out.println("=================");
+    System.out.println(counter + " Images were Dectected on this Web Page"); 
   }
   
   public void printWantedImages(String regex, String url) throws IOException {
@@ -32,7 +32,7 @@ public class ImageParser {
       
       for(Element i : images) {
          if((i.tagName().equals("img")) && (i.attr("abs:src").contains(regex))) {
-            Utility.print(" Image at " + i.attr("abs:src"));
+            System.out.println(" Image at " + i.attr("abs:src"));
          }
      }
   }
