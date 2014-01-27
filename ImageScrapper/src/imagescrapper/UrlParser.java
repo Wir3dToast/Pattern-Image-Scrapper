@@ -4,7 +4,6 @@
  */
 package imagescrapper;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.*;
@@ -17,7 +16,6 @@ import java.util.*;
 //private class for webpage? has both url and doc in it already?
 
 public class UrlParser {
-    //Note to self: need to make ImageParser and UrlParser more consist in terms of constructors!!!
     
     public UrlParser() throws IOException {
         System.out.println("Getting links from " + Utility.url);
@@ -62,7 +60,8 @@ public class UrlParser {
     
     public ArrayList<String> getLinks(String regex, String url) throws IOException {
         Elements links = Utility.getElements("a[href]", url);
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
+        
         for(Element i : links) {
             if((i.attr("abs:href").contains(regex)) && !list.contains(i.attr("abs:href"))) {
                 list.add(i.attr("abs:href"));
