@@ -24,10 +24,16 @@ import java.awt.color.CMMException;
 
 public class ImageProcessor {
     
+    private ImageParser imgpar;
+    private UrlParser urlpar;
+    
     public ImageProcessor() throws IOException {
         //Destination address
         //Connects and gets HTML file
          System.out.println("Downloading to " + Utility.directory);
+         
+         imgpar = new ImageParser();
+         urlpar = new UrlParser();
     }
     
     //Get ALL images on a webpage. 
@@ -62,7 +68,7 @@ public class ImageProcessor {
     
     public void InitializeRegexDownload(String regex, String url, boolean ScrapLinks) throws IOException {
         //ScrapLinks boolean determines if the user wants the webpages referred to by the links to be gleaned by an image regex expression as well
-        ArrayList<String> list = (new UrlParser()).getLinks(regex,url);
+        ArrayList<String> list = urlpar.getLinks(regex,url);
         if(ScrapLinks) { RegexLinkDownloadTraversal(list); } 
         else { DirectDownloadFromLink(list); }
     } 
@@ -88,13 +94,13 @@ public class ImageProcessor {
         
     //Imposes both link and image regex rules
     public void RegexCombined (String linkregex, String url, String imgregex) throws IOException{
-        ArrayList<String> list = (new UrlParser()).getLinks(linkregex,url);
+        ArrayList<String> list = urlpar.getLinks(linkregex,url);
         for(String site : list) { RegexImageDownload(site,imgregex); } 
     }
     
     //Imposes regex 
     public void RegexImageDownload(String url, String regex) throws IOException{
-        ArrayList<String> list = (new ImageParser()).imposeRules(regex, url);
+        ArrayList<String> list = imgpar.imposeRules(regex, url);
         for(String a : list) { DownloadFile(a); }
     }
     
