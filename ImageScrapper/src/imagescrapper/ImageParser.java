@@ -8,6 +8,7 @@ package imagescrapper;
  *
  * @author Edward
  */
+
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class ImageParser {
   //Perhaps we can use option for relative urls? 
   public ArrayList<String> imposeRules(String regex, String url) throws IOException {
      Elements images = Utility.getElements("[src]", url);
-     ArrayList<String> list = new ArrayList<String>();
+     ArrayList<String> list = new ArrayList<>();
      
      for(Element i : images) {
          if((i.tagName().equals("img")) && (i.attr("abs:src").contains(regex))) {
