@@ -22,10 +22,11 @@ import java.awt.color.CMMException;
  * @author Edward Kim 
  */
 
+//TODO: add new features with regex, make readme file better, and work on server client. Newmodes, renaming. 
 public class ImageProcessor {
     
-    private ImageParser imgpar;
-    private UrlParser urlpar;
+    private final ImageParser imgpar;
+    private final UrlParser urlpar;
     
     public ImageProcessor() throws IOException {
         //Destination address
@@ -78,7 +79,7 @@ public class ImageProcessor {
     private void RegexLinkDownloadTraversal(ArrayList<String> list) throws IOException {
         //Note to self: think of better wway to create URL parse. 
         for(String a : list ) {
-          System.out.println("Downloading from " + a);
+           System.out.println("Downloading from " + a);
            ProcessImage(a);
         }       
     }
@@ -93,7 +94,7 @@ public class ImageProcessor {
     }
         
     //Imposes both link and image regex rules
-    public void RegexCombined (String linkregex, String url, String imgregex) throws IOException{
+    public void RegexCombined (String linkregex, String url, String imgregex) throws IOException {
         ArrayList<String> list = urlpar.getLinks(linkregex,url);
         for(String site : list) { RegexImageDownload(site,imgregex); } 
     }
