@@ -5,6 +5,7 @@
 package Interface;
 
 import java.io.PrintStream;
+import java.io.Writer;
 import java.io.OutputStream;
 import javax.swing.JTextArea;
 /**
@@ -16,7 +17,7 @@ public class TextAreaPrintStream extends PrintStream {
     private JTextArea textarea;
     
     public TextAreaPrintStream(JTextArea area, OutputStream output) {
-        super(output);
+        super(output,true);
         textarea = area;
     }
     
