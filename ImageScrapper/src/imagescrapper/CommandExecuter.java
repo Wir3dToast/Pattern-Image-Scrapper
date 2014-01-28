@@ -12,14 +12,15 @@ package imagescrapper;
 import java.io.IOException;
 //Acts as the class that executes all commands. Necessary to call commands regardless if in Terminal mode or Applet mode 
 public class CommandExecuter {
-     private UrlParser par;
-     private ImageProcessor im;
-     private ImageParser parimg;
+    
+     private final HtmlLinkParser par;
+     private final ImageProcessor im;
+     private final HtmlImageParser parimg;
      
     public CommandExecuter() throws IOException {
-        par = new UrlParser();
+        par = new HtmlLinkParser();
         im = new ImageProcessor();
-        parimg = new ImageParser();    
+        parimg = new HtmlImageParser();    
      }
      
      public void printLinks() throws IOException {
