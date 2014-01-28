@@ -4,7 +4,6 @@ package Interface;
 import imagescrapper.Terminal;
 import imagescrapper.Utility;
 
-import Interface.TextAreaPrintStream;
 /* swing libraries */
 
 import javax.swing.JFileChooser;
