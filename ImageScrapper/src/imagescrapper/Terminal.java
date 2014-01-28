@@ -5,7 +5,6 @@
 package imagescrapper;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  *
@@ -13,7 +12,8 @@ import java.util.Scanner;
  */
 public class Terminal {
      
-     private CommandExecuter com;
+     private final CommandExecuter com;
+     
      //Initializes global url and directory. 
      public Terminal() throws IOException {
       if(Utility.CheckifDirExists(Utility.directory)) {
