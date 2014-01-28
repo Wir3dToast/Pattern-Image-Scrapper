@@ -4,37 +4,33 @@
  */
 package imagescrapper;
 
-import java.net.URL;
-import java.net.URLConnection;
-
 import java.util.*;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
 import java.io.*;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.awt.color.CMMException;
+
+import Threads.ImageSaverThread;
 /**
  *
  * @author Edward Kim 
  */
 
-//TODO: add new features with regex, make readme file better, and work on server client. Newmodes, renaming. 
+//TODO: add new features with regex, make readme file better, and work on server client. Newmodes, concurrency with printstream. 
 public class ImageProcessor {
     
-    private final ImageParser imgpar;
-    private final UrlParser urlpar;
+    private final HtmlImageParser imgpar;
+    private final HtmlLinkParser urlpar;
     
     public ImageProcessor() throws IOException {
         //Destination address
         //Connects and gets HTML file
          System.out.println("Downloading to " + Utility.directory);
          
-         imgpar = new ImageParser();
-         urlpar = new UrlParser();
+         imgpar = new HtmlImageParser();
+         urlpar = new HtmlLinkParser();
     }
     
     //Get ALL images on a webpage. 
@@ -54,24 +50,22 @@ public class ImageProcessor {
         //Creates URL
         try {
             System.out.println("Saving Image From " + urlpath);
-            
-            URLConnection conn = (new URL(urlpath)).openConnection();
-            conn.setRequestProperty("User-Agent", "Mozilla");
-            BufferedImage image = ImageIO.read(conn.getInputStream());
-            SaveImage(image,urlpath);         
-        }
-        
-        catch(CMMException | IOException a) {
+           
+            //Start download image and Disk IO Thread
+            (new ImageSaverThread(urlpath)).start();        
+        } catch(CMMException | IOException a) {
             System.out.println("Invalid Image format. WIP");
-        }
-          
+        }     
     }
     
     public void InitializeRegexDownload(String regex, String url, boolean ScrapLinks) throws IOException {
         //ScrapLinks boolean determines if the user wants the webpages referred to by the links to be gleaned by an image regex expression as well
         ArrayList<String> list = urlpar.getLinks(regex,url);
-        if(ScrapLinks) { RegexLinkDownloadTraversal(list); } 
-        else { DirectDownloadFromLink(list); }
+        if(ScrapLinks) { 
+            RegexLinkDownloadTraversal(list); 
+        } else { 
+            DirectDownloadFromLink(list); 
+        }
     } 
     
     //Specify which webpages to connect to by regex expressions. 
@@ -104,21 +98,4 @@ public class ImageProcessor {
         ArrayList<String> list = imgpar.imposeRules(regex, url);
         for(String a : list) { DownloadFile(a); }
     }
-    
-    /*
-    All methods used to save images to the disk 
-    */
-    private String getName(String url) {
-        return url.substring(url.lastIndexOf("/") + 1);
-    }
-    
-    private String getFormat(String picname) {
-        return picname.substring(picname.lastIndexOf(".") + 1);
-    }
-        
-    private void SaveImage(BufferedImage image, String url) throws IOException {
-        String picname = getName(url);
-        ImageIO.write(image, getFormat(picname), new File(Utility.directory + Utility.delimiter + picname));
-    }
-    
 }
