@@ -4,8 +4,9 @@
  */
 package Interface;
 
+import Threads.TextAreaPrintThread;
+
 import java.io.PrintStream;
-import java.io.Writer;
 import java.io.OutputStream;
 import javax.swing.JTextArea;
 /**
@@ -14,7 +15,7 @@ import javax.swing.JTextArea;
  */
 public class TextAreaPrintStream extends PrintStream {
 
-    private JTextArea textarea;
+    private final JTextArea textarea;
     
     public TextAreaPrintStream(JTextArea area, OutputStream output) {
         super(output,true);
@@ -23,11 +24,12 @@ public class TextAreaPrintStream extends PrintStream {
     
     @Override
     public void println(String str) {
-       textarea.append((str + '\n'));
+       (new TextAreaPrintThread(textarea,str + '\n')).start();
     }
     
     @Override
     public void print(String str) {
-       textarea.append(str);
+       (new TextAreaPrintThread(textarea,str)).start();
     }
+    
 }
