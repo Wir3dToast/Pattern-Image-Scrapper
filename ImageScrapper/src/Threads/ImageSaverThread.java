@@ -6,7 +6,7 @@
 
 package Threads;
 
-import imagescrapper.Utility;
+import Utilities.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +21,11 @@ import javax.imageio.ImageIO;
 public class ImageSaverThread extends Thread {
     
     private final String Url;
+    private final String DirectoryPath;
     
-    public ImageSaverThread(String url) throws IOException {
+    public ImageSaverThread(String url, String directory) throws IOException {
         Url = url;
+        DirectoryPath = directory;
     }
     
     private void SaveImage() throws IOException {
@@ -31,9 +33,10 @@ public class ImageSaverThread extends Thread {
         conn.setRequestProperty("User-Agent", "Mozilla");
         BufferedImage Image = ImageIO.read(conn.getInputStream());
         
-        String picname = Url.substring(Url.lastIndexOf("/") + 1);
+        String picname = Utilities.getLastStringFromUrl(Url);
         String format = picname.substring(picname.lastIndexOf(".") + 1);
-        ImageIO.write(Image, format, new File(Utility.directory + Utility.delimiter + picname));
+        
+        ImageIO.write(Image, format, new File(DirectoryPath + OSPathNames.delimiter + picname));
     }
     
     @Override
